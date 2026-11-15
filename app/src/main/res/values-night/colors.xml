@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Paleta OSCURA de TecniClima.
+  Reproduce literalmente la paleta definida en el spec (§3):
+  Fondo #0B132B | Contenedores #152238 / #1E2D4A | Texto #FFFFFF / #A0AEC0 / #CBD5E1
+  Acentos #00D4FF / #38BDF8 | Estados #28A745 #FF9800 #00A8FF #E53935 | WhatsApp #25D366
+-->
+<resources>
+    <color name="primary">#00D4FF</color>
+    <color name="primaryDark">#38BDF8</color>
+    <color name="primaryContainer">#0B3A52</color>
+    <color name="onPrimaryContainer">#0B132B</color>
+
+    <color name="background">#0B132B</color>
+    <color name="cardBackground">#152238</color>
+    <color name="containerAlt">#1E2D4A</color>
+    <color name="inputBackground">#0F1B33</color>
+
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#A0AEC0</color>
+    <color name="textSecondaryAlt">#CBD5E1</color>
+
+    <color name="outline">#2A3B57</color>
+    <color name="divider">#1E293B</color>
+
+    <color name="verde">#28A745</color>
+    <color name="naranja">#FF9800</color>
+    <color name="celeste">#00A8FF</color>
+    <color name="rojo">#E53935</color>
+    <color name="whatsapp">#25D366</color>
+
+    <color name="scrim">#99000000</color>
+</resources>

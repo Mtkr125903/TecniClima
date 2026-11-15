@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Paleta CLARA de TecniClima.
+  La paleta oficial del spec vive en values-night/colors.xml (modo oscuro).
+  Estos valores son el equivalente claro: mantienen la identidad de marca
+  (cian / azul marino) garantizando contraste AA sobre fondos claros.
+-->
+<resources>
+    <color name="primary">#0077A3</color>
+    <color name="primaryDark">#005F80</color>
+    <color name="primaryContainer">#CDEDF8</color>
+    <color name="onPrimaryContainer">#FFFFFF</color>
+
+    <color name="background">#F1F5FB</color>
+    <color name="cardBackground">#FFFFFF</color>
+    <color name="containerAlt">#E3EBF5</color>
+    <color name="inputBackground">#F7FAFE</color>
+
+    <color name="textPrimary">#0B132B</color>
+    <color name="textSecondary">#55637A</color>
+    <color name="textSecondaryAlt">#6B7A90</color>
+
+    <color name="outline">#C7D2E0</color>
+    <color name="divider">#DDE5EF</color>
+
+    <color name="verde">#1E7E34</color>
+    <color name="naranja">#B36B00</color>
+    <color name="celeste">#0077B6</color>
+    <color name="rojo">#C62828</color>
+    <color name="whatsapp">#1FA855</color>
+
+    <color name="scrim">#66000000</color>
+</resources>

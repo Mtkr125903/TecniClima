@@ -1,0 +1,20 @@
+pluginManagement {
+    repositories {
+        google()
+        maven { url 'https://repo1.maven.org/maven2' }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        // repo1.maven.org: repo.maven.apache.org no es accesible desde esta red.
+        maven { url 'https://repo1.maven.org/maven2' }
+        mavenCentral()
+    }
+}
+
+rootProject.name = "AirServicePRO"
+include(":app")

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Tema unico auto-adaptativo.
+  Todos los colores apuntan a recursos que resuelven distinto en values/ y values-night/,
+  por lo que el mismo tema funciona en modo claro y oscuro sin duplicar el archivo.
+-->
+<resources>
+
+    <style name="Theme.AirServicePro" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Roles Material3 -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/background</item>
+        <item name="colorPrimaryContainer">@color/primaryContainer</item>
+        <item name="colorOnPrimaryContainer">@color/onPrimaryContainer</item>
+        <item name="colorSecondary">@color/primary</item>
+        <item name="colorOnSecondary">@color/background</item>
+        <item name="colorSecondaryContainer">@color/containerAlt</item>
+        <item name="colorOnSecondaryContainer">@color/textPrimary</item>
+        <item name="colorTertiary">@color/primaryDark</item>
+        <item name="colorOnTertiary">@color/background</item>
+
+        <item name="colorSurface">@color/cardBackground</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+        <item name="colorSurfaceVariant">@color/containerAlt</item>
+        <item name="colorOnSurfaceVariant">@color/textSecondary</item>
+        <item name="colorSurfaceContainer">@color/cardBackground</item>
+        <item name="colorSurfaceContainerHigh">@color/cardBackground</item>
+        <item name="colorSurfaceContainerHighest">@color/containerAlt</item>
+        <item name="colorSurfaceContainerLow">@color/background</item>
+        <item name="colorSurfaceContainerLowest">@color/background</item>
+
+        <item name="colorOutline">@color/outline</item>
+        <item name="colorOutlineVariant">@color/divider</item>
+        <item name="colorError">@color/rojo</item>
+        <item name="colorOnError">@color/textPrimary</item>
+        <item name="colorErrorContainer">@color/containerAlt</item>
+        <item name="colorOnErrorContainer">@color/rojo</item>
+
+        <!-- Fondo de ventanas -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
+        <item name="android:windowLightStatusBar">@bool/light_system_bars</item>
+
+        <!-- Texto global del sistema -->
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorTertiary">@color/textSecondary</item>
+        <item name="android:textColorHint">@color/textSecondary</item>
+        <item name="android:textColorHighlight">@color/primary</item>
+
+        <!-- Dialogos -->
+        <item name="alertDialogTheme">@style/CustomAlertDialogTheme</item>
+        <item name="materialAlertDialogTheme">@style/CustomAlertDialogTheme</item>
+        <item name="bottomSheetDialogTheme">@style/CustomAlertDialogTheme</item>
+
+        <!-- Componentes -->
+        <item name="materialButtonStyle">@style/Widget.AirService.Button</item>
+        <item name="floatingActionButtonStyle">@style/Widget.AirService.Fab</item>
+    </style>
+
+    <style name="CustomAlertDialogTheme" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="colorSurface">@color/cardBackground</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+        <item name="colorSurfaceVariant">@color/containerAlt</item>
+        <item name="colorOnSurfaceVariant">@color/textSecondary</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/background</item>
+        <item name="colorError">@color/rojo</item>
+        <item name="colorOnError">@color/textPrimary</item>
+        <item name="android:colorBackground">@color/cardBackground</item>
+        <item name="android:background">@color/cardBackground</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorHint">@color/textSecondary</item>
+    </style>
+
+    <style name="Widget.AirService.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/primary</item>
+        <item name="android:textColor">@color/background</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <style name="Widget.AirService.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/primary</item>
+        <item name="strokeColor">@color/primary</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!--
+      FAB: fondo cian y glifo navy. El tint explicito evita que Material
+      reemplace el color del vector por colorOnPrimaryContainer.
+    -->
+    <style name="Widget.AirService.Fab" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">@color/primary</item>
+        <item name="tint">@color/onPrimaryContainer</item>
+        <item name="elevation">6dp</item>
+    </style>
+
+    <style name="Widget.AirService.Fab.Whatsapp" parent="Widget.AirService.Fab">
+        <item name="backgroundTint">@color/whatsapp</item>
+        <item name="tint">@color/onPrimaryContainer</item>
+    </style>
+
+    <style name="Widget.AirService.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/inputBackground</item>
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="hintTextColor">@color/primary</item>
+    </style>
+
+    <style name="Widget.AirService.TextInputLayout.Dropdown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxBackgroundColor">@color/inputBackground</item>
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="hintTextColor">@color/primary</item>
+    </style>
+
+    <style name="Widget.AirService.Card" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/cardBackground</item>
+        <item name="strokeColor">@color/divider</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">3dp</item>
+    </style>
+
+    <style name="TextAppearance.AirService.Empty" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+    </style>
+
+    <style name="TextAppearance.AirService.Badge" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:background">@drawable/bg_badge</item>
+    </style>
+
+    <style name="TextAppearance.AirService.SectionTitle" parent="TextAppearance.Material3.TitleSmall">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="TextAppearance.AirService.Label" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:textColor">@color/textSecondary</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextAppearance.AirService.Value" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+</resources>

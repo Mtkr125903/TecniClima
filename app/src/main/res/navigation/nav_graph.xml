@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Grafo de navegacion de AirServicePRO.
+
+    Cada pestana es un subgrafo anidado: asi cada una conserva su propia pila
+    (por ejemplo, abrir la ficha de un cliente y cambiar de pestana no pierde
+    la ficha; al volver se restaura).
+-->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/clientes_nav">
+
+    <!-- ============ Clientes ============ -->
+    <navigation
+        android:id="@+id/clientes_nav"
+        app:startDestination="@id/clientesFragment">
+
+        <fragment
+            android:id="@+id/clientesFragment"
+            android:name="com.airservice.pro.ui.client.ClientFragment"
+            android:label="@string/module_client">
+
+            <action
+                android:id="@+id/action_clientes_to_detalle"
+                app:destination="@id/clientDetailFragment" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/clientDetailFragment"
+            android:name="com.airservice.pro.ui.client.ClientDetailFragment"
+            android:label="@string/label_client_detail">
+
+            <argument
+                android:name="clientId"
+                app:argType="long" />
+        </fragment>
+    </navigation>
+
+    <!-- ============ Equipos ============ -->
+    <navigation
+        android:id="@+id/equipos_nav"
+        app:startDestination="@id/equiposFragment">
+
+        <fragment
+            android:id="@+id/equiposFragment"
+            android:name="com.airservice.pro.ui.equipment.EquipmentFragment"
+            android:label="@string/module_equipment">
+
+            <action
+                android:id="@+id/action_equipos_to_detalle"
+                app:destination="@id/equipmentDetailFragment" />
+        </fragment>
+
+        <fragment
+            android:id="@+id/equipmentDetailFragment"
+            android:name="com.airservice.pro.ui.equipment.EquipmentDetailFragment"
+            android:label="@string/label_equipment_detail">
+
+            <argument
+                android:name="equipmentId"
+                app:argType="long" />
+        </fragment>
+    </navigation>
+
+    <!-- ============ Historial ============ -->
+    <navigation
+        android:id="@+id/historial_nav"
+        app:startDestination="@id/historialFragment">
+
+        <fragment
+            android:id="@+id/historialFragment"
+            android:name="com.airservice.pro.ui.history.ServiceHistoryFragment"
+            android:label="@string/module_history" />
+    </navigation>
+
+    <!-- ============ Presupuestos ============ -->
+    <navigation
+        android:id="@+id/presupuestos_nav"
+        app:startDestination="@id/presupuestosFragment">
+
+        <fragment
+            android:id="@+id/presupuestosFragment"
+            android:name="com.airservice.pro.ui.budget.PresupuestosFragment"
+            android:label="@string/module_budget" />
+    </navigation>
+
+    <!-- ============ Comprobantes ============ -->
+    <navigation
+        android:id="@+id/comprobantes_nav"
+        app:startDestination="@id/comprobantesFragment">
+
+        <fragment
+            android:id="@+id/comprobantesFragment"
+            android:name="com.airservice.pro.ui.receipt.ReceiptsFragment"
+            android:label="@string/module_receipt" />
+    </navigation>
+
+    <!-- ============ Seguimiento ============ -->
+    <navigation
+        android:id="@+id/seguimiento_nav"
+        app:startDestination="@id/seguimientoFragment">
+
+        <fragment
+            android:id="@+id/seguimientoFragment"
+            android:name="com.airservice.pro.ui.track.TrackFragment"
+            android:label="@string/module_track" />
+    </navigation>
+
+    <!-- ============ Agenda ============ -->
+    <navigation
+        android:id="@+id/agenda_nav"
+        app:startDestination="@id/agendaFragment">
+
+        <fragment
+            android:id="@+id/agendaFragment"
+            android:name="com.airservice.pro.ui.agenda.AgendaFragment"
+            android:label="@string/module_agenda" />
+    </navigation>
+
+</navigation>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_client" android:title="@string/module_client" />
+    <item android:id="@+id/nav_equipment" android:title="@string/module_equipment" />
+    <item android:id="@+id/nav_history" android:title="@string/module_history" />
+    <item android:id="@+id/nav_budget" android:title="@string/module_budget" />
+    <item android:id="@+id/nav_receipt" android:title="@string/module_receipt" />
+    <item android:id="@+id/nav_track" android:title="@string/module_track" />
+</menu>

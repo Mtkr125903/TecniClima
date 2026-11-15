@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TecniClima</string>
+    <string name="app_tagline">Gestión Técnica &amp; Servicios</string>
+
+    <!-- ================= Módulos ================= -->
+    <string name="module_client">Clientes</string>
+    <string name="module_equipment">Equipos</string>
+    <string name="module_history">Historial</string>
+    <string name="module_budget">Presupuestos</string>
+    <string name="module_receipt">Comprobantes</string>
+    <string name="module_track">Seguimiento</string>
+    <string name="module_agenda">Agenda</string>
+    <string name="module_technician">Técnicos</string>
+
+    <!-- ================= Accesos directos ================= -->
+    <string name="action_agenda">Agenda y Turnos</string>
+    <string name="action_clientes_equipos">Clientes y Equipos</string>
+    <string name="action_whatsapp">WhatsApp</string>
+
+    <!-- ================= Acciones ================= -->
+    <string name="action_save">Guardar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_search">Buscar</string>
+    <string name="action_call">Llamar</string>
+    <string name="action_share">Compartir</string>
+    <string name="action_pdf">Generar PDF</string>
+    <string name="action_new">Nuevo</string>
+    <string name="action_accept">Aprobar</string>
+    <string name="action_reject">Rechazar</string>
+    <string name="action_send">Enviar</string>
+    <string name="action_mark_paid">Marcar pagado</string>
+    <string name="action_mark_sent">Marcar enviado</string>
+    <string name="action_to_budget">Convertir en presupuesto</string>
+    <string name="action_to_receipt">Generar comprobante</string>
+    <string name="action_add_equipment">Agregar equipo</string>
+    <string name="label_client_detail">Ficha de cliente</string>
+    <string name="label_equipment_detail">Ficha de equipo</string>
+    <string name="msg_back_again">Presioná otra vez para salir</string>
+    <string name="label_photos">Fotos del equipo</string>
+    <string name="action_add_photo">Agregar foto</string>
+    <string name="action_take_photo">Tomar foto</string>
+    <string name="action_pick_photo">Elegir de la galería</string>
+    <string name="action_delete_photo">Borrar foto</string>
+    <string name="dialog_delete_photo_message">La foto se borra del equipo. Esta acción no se puede deshacer.</string>
+    <string name="action_close">Cerrar</string>
+    <string name="empty_photos">Sin fotos cargadas. Usá “Agregar foto” para documentar el equipo.</string>
+    <plurals name="msg_photo_limit">
+        <item quantity="one">Máximo %1$d foto por equipo</item>
+        <item quantity="other">Máximo %1$d fotos por equipo</item>
+    </plurals>
+    <string name="msg_photo_added">Foto agregada</string>
+    <string name="msg_photo_deleted">Foto borrada</string>
+    <string name="msg_photo_error">No se pudo guardar la foto</string>
+    <string name="msg_no_camera">No hay una cámara disponible en el dispositivo</string>
+
+    <!-- ================= Estados ================= -->
+    <string name="estado_pendiente_aprobacion">Pendiente de aprobación</string>
+    <string name="estado_aprobado">Aprobado</string>
+    <string name="estado_rechazado">Rechazado</string>
+    <string name="estado_pendiente">Pendiente</string>
+    <string name="estado_enviado">Enviado</string>
+    <string name="estado_pagado">Pagado</string>
+    <string name="estado_completado">Completado</string>
+    <string name="estado_en_proceso">En proceso</string>
+    <string name="estado_cancelado">Cancelado</string>
+    <string name="estado_sin_iniciar">Sin iniciar</string>
+    <string name="estado_turno_confirmado">Confirmado</string>
+    <string name="estado_turno_pendiente">Pendiente</string>
+    <string name="estado_turno_cancelado">Cancelado</string>
+    <string name="estado_turno_completado">Completado</string>
+
+    <!-- ================= Tipos de servicio ================= -->
+    <string name="service_type_preventivo">Mantenimiento Preventivo</string>
+    <string name="service_type_fuga">Reparación de Fuga</string>
+    <string name="service_type_limpieza">Limpieza de Filtros y Baterías</string>
+    <string name="service_type_instalacion">Instalación</string>
+    <string name="service_type_reparacion">Reparación</string>
+
+    <!-- ================= Estados vacíos ================= -->
+    <string name="empty_clients">Todavía no hay clientes.\nUsá el botón + para cargar el primero.</string>
+    <string name="empty_equipment">Todavía no hay equipos.\nUsá el botón + para registrar uno.</string>
+    <string name="empty_history">Todavía no hay servicios registrados.</string>
+    <string name="empty_budget">Todavía no hay presupuestos.</string>
+    <string name="empty_receipt">Todavía no hay comprobantes.</string>
+    <string name="empty_track">No hay trabajos en curso.</string>
+    <string name="empty_agenda">No hay turnos programados para hoy.</string>
+    <string name="empty_search">Sin resultados para «%1$s».</string>
+    <string name="empty_generic">Sin registros</string>
+
+    <!-- ================= Hints de formularios ================= -->
+    <string name="hint_name">Nombre y apellido</string>
+    <string name="hint_phone">Teléfono</string>
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_address">Dirección</string>
+    <string name="hint_notes">Notas</string>
+    <string name="hint_type">Tipo (ej. Split)</string>
+    <string name="hint_brand">Marca</string>
+    <string name="hint_model">Modelo</string>
+    <string name="hint_serial">Número de serie</string>
+    <string name="hint_install_date">Fecha de instalación</string>
+    <string name="hint_capacity_w">Capacidad (W)</string>
+    <string name="hint_capacity_btu">Capacidad (BTU)</string>
+    <string name="hint_gas">Gas refrigerante</string>
+    <string name="hint_location">Ubicación en el inmueble</string>
+    <string name="hint_client">Cliente</string>
+    <string name="hint_equipment">Equipo</string>
+    <string name="hint_technician">Técnico</string>
+    <string name="hint_amount">Monto ($)</string>
+    <string name="hint_description">Descripción / detalle</string>
+    <string name="hint_observation">Observación</string>
+    <string name="hint_service_type">Tipo de servicio</string>
+    <string name="hint_cost">Costo ($)</string>
+    <string name="hint_date">Fecha</string>
+    <string name="hint_hour">Hora</string>
+    <string name="hint_title">Título</string>
+    <string name="hint_progress">Avance (%)</string>
+    <string name="hint_payment_method">Método de pago</string>
+    <string name="hint_work_description">Detalle del trabajo</string>
+    <string name="hint_speciality">Especialidad</string>
+    <string name="hint_search_client">Buscar cliente…</string>
+    <string name="hint_search_equipment">Buscar equipo o serie…</string>
+
+    <!-- ================= Fichas ================= -->
+    <string name="label_client_data">Datos del cliente</string>
+    <string name="label_equipment">Equipos instalados</string>
+    <string name="label_services">Historial de servicios</string>
+    <string name="label_budgets">Presupuestos</string>
+    <string name="label_receipts">Comprobantes</string>
+    <string name="label_contact">Contacto</string>
+    <string name="label_install_date">Instalado</string>
+    <string name="label_serial">Serie</string>
+    <string name="label_capacity">Capacidad</string>
+    <string name="label_gas">Gas</string>
+    <string name="label_technician">Técnico</string>
+    <string name="label_advance">Avance</string>
+    <string name="label_schedule">Turno</string>
+    <string name="label_amount">Total</string>
+    <string name="label_detail_lines">Detalle</string>
+
+    <!-- ================= Diálogos ================= -->
+    <string name="dialog_new_client">Nuevo cliente</string>
+    <string name="dialog_edit_client">Editar cliente</string>
+    <string name="dialog_new_equipment">Nuevo equipo</string>
+    <string name="dialog_edit_equipment">Editar equipo</string>
+    <string name="dialog_new_budget">Nuevo presupuesto</string>
+    <string name="dialog_edit_budget">Editar presupuesto</string>
+    <string name="dialog_new_receipt">Nuevo comprobante</string>
+    <string name="dialog_new_service">Registrar servicio</string>
+    <string name="dialog_new_work">Nuevo trabajo</string>
+    <string name="dialog_edit_work">Editar trabajo</string>
+    <string name="dialog_new_turn">Nuevo turno</string>
+    <string name="dialog_new_technician">Nuevo técnico</string>
+    <string name="dialog_delete_title">Confirmar eliminación</string>
+    <string name="dialog_delete_message">¿Eliminar «%1$s»? Esta acción no se puede deshacer.</string>
+    <string name="dialog_delete_client_message">Se eliminarán también sus equipos y servicios asociados.</string>
+    <string name="dialog_required_field">Completá los campos obligatorios.</string>
+    <string name="dialog_select_client_first">Elegí primero un cliente.</string>
+
+    <!-- ================= Formatos ================= -->
+    <string name="currency_format">$ %1$s</string>
+    <string name="progress_format">%1$d%%</string>
+    <string name="date_display">dd/MM/yyyy</string>
+    <string name="datetime_display">dd/MM/yyyy HH:mm</string>
+
+    <!-- ================= Notificaciones ================= -->
+    <string name="msg_saved">Guardado</string>
+    <string name="msg_deleted">Eliminado</string>
+    <string name="msg_error">No se pudo completar la operación</string>
+    <string name="msg_pdf_generated">PDF generado</string>
+    <string name="msg_pdf_error">No se pudo generar el PDF</string>
+    <string name="msg_no_phone">El cliente no tiene teléfono cargado</string>
+    <string name="msg_whatsapp_opened">Mensaje enviado por WhatsApp</string>
+    <string name="msg_whatsapp_error">No se encontró WhatsApp en el dispositivo</string>
+    <string name="msg_no_client_selected">Seleccioná un cliente</string>
+    <string name="msg_no_equipment_selected">Seleccioná un equipo</string>
+    <string name="msg_budget_approved">Presupuesto aprobado</string>
+    <string name="msg_budget_rejected">Presupuesto rechazado</string>
+    <string name="msg_receipt_paid">Comprobante marcado como pagado</string>
+    <string name="msg_receipt_sent">Comprobante marcado como enviado</string>
+    <string name="msg_work_updated">Avance actualizado</string>
+
+    <!-- ================= PDF / WhatsApp ================= -->
+    <string name="pdf_title_receipt">Comprobante de Servicio</string>
+    <string name="pdf_title_budget">Presupuesto</string>
+    <string name="pdf_client">Cliente</string>
+    <string name="pdf_equipment">Equipo</string>
+    <string name="pdf_type">Tipo</string>
+    <string name="pdf_amount">Total</string>
+    <string name="pdf_observation">Observación</string>
+    <string name="pdf_date">Fecha</string>
+    <string name="pdf_technician">Técnico</string>
+    <string name="pdf_number">Nro.</string>
+    <string name="pdf_brand">Marca</string>
+    <string name="pdf_model">Modelo</string>
+    <string name="pdf_serial">Serie</string>
+    <string name="pdf_footer">TecniClima · Gestión Técnica &amp; Servicios</string>
+    <string name="share_pdf_title">Enviar documento</string>
+    <string name="whatsapp_receipt_body">Hola %1$s, te enviamos el comprobante %2$s por %3$s de TecniClima.</string>
+    <string name="whatsapp_budget_body">Hola %1$s, te enviamos el presupuesto %2$s por %3$s de TecniClima.</string>
+    <string name="whatsapp_generic_body">Hola %1$s, te escribimos desde TecniClima.</string>
+
+    <!-- ================= Content descriptions ================= -->
+    <string name="cd_add">Agregar</string>
+    <string name="cd_add_client">Agregar cliente</string>
+    <string name="cd_add_equipment">Agregar equipo</string>
+    <string name="cd_add_service">Registrar servicio</string>
+    <string name="cd_add_budget">Agregar presupuesto</string>
+    <string name="cd_add_receipt">Agregar comprobante</string>
+    <string name="cd_add_work">Agregar trabajo</string>
+    <string name="cd_add_turn">Agregar turno</string>
+    <string name="cd_add_technician">Agregar técnico</string>
+    <string name="cd_generate_pdf">Generar PDF</string>
+    <string name="cd_client">Cliente</string>
+    <string name="cd_equipment">Equipo</string>
+    <string name="cd_service">Servicio</string>
+    <string name="cd_budget">Presupuesto</string>
+    <string name="cd_receipt">Comprobante</string>
+    <string name="cd_track">Seguimiento</string>
+    <string name="cd_agenda">Agenda</string>
+    <string name="cd_technician">Técnico</string>
+    <string name="cd_empty">Sin registros</string>
+</resources>

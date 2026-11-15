@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- ============ Selector de fecha ============ -->
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.AirService.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="6dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDiaAnterior"
+                    style="@style/Widget.AirService.Button.Outlined"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_agenda"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:minWidth="44dp"
+                    android:paddingHorizontal="0dp"
+                    app:icon="@drawable/ic_close"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconTint="@color/primary"
+                    app:strokeColor="@color/primary" />
+
+                <TextView
+                    android:id="@+id/tvFecha"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAppearance="@style/TextAppearance.AirService.SectionTitle" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDiaSiguiente"
+                    style="@style/Widget.AirService.Button.Outlined"
+                    android:layout_width="44dp"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/action_agenda"
+                    android:insetLeft="0dp"
+                    android:insetRight="0dp"
+                    android:minWidth="44dp"
+                    android:paddingHorizontal="0dp"
+                    app:icon="@drawable/ic_add"
+                    app:iconGravity="textStart"
+                    app:iconPadding="0dp"
+                    app:iconTint="@color/primary"
+                    app:strokeColor="@color/primary" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTurnos"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="112dp" />
+
+        <TextView
+            android:id="@+id/tvEmpty"
+            style="@style/TextAppearance.AirService.Empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="24dp"
+            android:text="@string/empty_agenda"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAgregar"
+        style="@style/Widget.AirService.Fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/cd_add_turn"
+        app:srcCompat="@drawable/ic_add" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

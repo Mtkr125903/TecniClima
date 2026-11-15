@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Isotipo TecniClima (spec §3):
+  split metálico plateado con display digital cian "18°",
+  ráfaga de aire cian (refrigeración) entrelazada con llama naranja (calefacción).
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Cuerpo del split (plateado) -->
+    <path
+        android:pathData="M28,40 L80,40 C83.3,40 86,42.7 86,46 L86,64 C86,67.3 83.3,70 80,70 L28,70 C24.7,70 22,67.3 22,64 L22,46 C22,42.7 24.7,40 28,40 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="22"
+                android:startY="40"
+                android:endX="86"
+                android:endY="70"
+                android:type="linear">
+                <item android:color="#FFEDF2F7" android:offset="0" />
+                <item android:color="#FFCBD5E1" android:offset="0.55" />
+                <item android:color="#FF94A3B8" android:offset="1" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Display digital -->
+    <path
+        android:fillColor="#FF0B132B"
+        android:pathData="M56,47 L79,47 C80.1,47 81,47.9 81,49 L81,61 C81,62.1 80.1,63 79,63 L56,63 C54.9,63 54,62.1 54,61 L54,49 C54,47.9 54.9,47 56,47 Z" />
+
+    <!-- Digito 1 -->
+    <path
+        android:fillColor="#FF00D4FF"
+        android:pathData="M59,55.6 L63,51.6 L63,59.4 L60.6,59.4 L60.6,54.8 L59,55.6 Z" />
+
+    <!-- Digito 8 -->
+    <path
+        android:fillColor="#FF00D4FF"
+        android:fillType="evenOdd"
+        android:pathData="M73.6,53.4 m-3.1,0 a3.1,3.1 0 1,0 6.2,0 a3.1,3.1 0 1,0 -6.2,0 Z M73.6,53.4 m-1.4,0 a1.4,1.4 0 1,1 2.8,0 a1.4,1.4 0 1,1 -2.8,0 Z M73.6,58.6 m-3.1,0 a3.1,3.1 0 1,0 6.2,0 a3.1,3.1 0 1,0 -6.2,0 Z M73.6,58.6 m-1.4,0 a1.4,1.4 0 1,1 2.8,0 a1.4,1.4 0 1,1 -2.8,0 Z" />
+
+    <!-- Grados -->
+    <path
+        android:fillColor="#FF00D4FF"
+        android:pathData="M78.6,48.4 m-1.3,0 a1.3,1.3 0 1,0 2.6,0 a1.3,1.3 0 1,0 -2.6,0 Z" />
+
+    <!-- Rejilla de salida de aire -->
+    <path
+        android:fillColor="#FF64748B"
+        android:pathData="M30,73 L78,73 L78,76 L30,76 Z" />
+
+    <!-- Rafaga de aire cian (refrigeracion) -->
+    <path
+        android:fillColor="#FF00D4FF"
+        android:pathData="M26,80 C34,77 42,79 50,78 C58,77 66,79 74,77 C78,76 80,78 78,80 C72,85 62,83 54,84 C46,85 38,83 30,84 C25,84 22,82 26,80 Z" />
+    <path
+        android:fillColor="#FF38BDF8"
+        android:pathData="M32,87 C40,85 48,87 56,86 C62,85 68,86 72,85 C74,84.7 75,86 73,87 C67,90 59,89 51,90 C43,91 37,89 32,90 C29,90 29,87.4 32,87 Z" />
+
+    <!-- Llama naranja (calefaccion) entrelazada -->
+    <path
+        android:fillColor="#FFFF9800"
+        android:pathData="M16,80 C16,74 20,70 22,64 C23,70 27,72 27,76 C27,72 29,70 30,66 C34,71 36,75 36,79 C36,84 32,87 26,87 C20,87 16,84 16,80 Z" />
+    <path
+        android:fillColor="#FFE53935"
+        android:pathData="M22,80 C22,76 25,73 26,70 C26.5,73 29,75 29,78 C29,81 27,83 25,83 C23,83 22,82 22,80 Z" />
+</vector>
