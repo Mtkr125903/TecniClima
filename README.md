@@ -71,3 +71,16 @@ app/src/main/java/com/airservice/pro/
   elegida se copia al almacenamiento propio de la app porque el acceso a la galería es temporal.
 - **Compartir PDFs**: requiere `ClipData.newRawUri` + `FLAG_GRANT_READ_URI_PERMISSION`, o el
   chooser falla con *Permission Denial*.
+
+## Licencia
+
+**PolyForm Noncommercial 1.0.0** — el código es público y se puede clonar, estudiar y usar con
+fines **no comerciales** (personal, educativo, charities, organismos públicos).
+
+**Usar TecniClima con fines comerciales requiere una licencia de pago.** Para consultarla:
+[LICENCIA-COMERCIAL.md](LICENCIA-COMERCIAL.md) o escribile al usuario
+[`Mtkr125903`](https://github.com/Mtkr125903). El texto completo de la licencia está en
+[LICENSE](LICENSE).
+
+Si preferís una licencia abierta clásica (MIT, Apache-2.0, GPL-3.0) o Business Source License
+1.1, avisame y la cambio en un commit.
