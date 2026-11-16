@@ -4,6 +4,7 @@ App Android de gestión para empresas de climatización y HVAC (módulos de Clie
 Historial de Servicios, Presupuestos, Comprobantes, Seguimiento de Trabajos y Agenda y Turnos).
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-1.9.23-7F52FF.svg) ![Android](https://img.shields.io/badge/Android-24%2B-3DDC84.svg) ![Room](https://img.shields.io/badge/Room-2.6.1-FF6D00.svg)
+[![Android CI](https://github.com/Mtkr125903/TecniClima/actions/workflows/android.yml/badge.svg)](https://github.com/Mtkr125903/TecniClima/actions/workflows/android.yml)
 
 ## Stack
 
@@ -40,6 +41,12 @@ APK: `app/build/outputs/apk/debug/app-debug.apk`
 ```
 
 Reportes: `app/build/reports/lint-results-debug.html`
+
+## Integración continua
+
+GitHub Actions corre en cada push y pull request a `main`
+(`.github/workflows/android.yml`): JDK 17, Android SDK 34, `assembleDebug test lintDebug` y
+publicación del APK de debug como artefacto (`app-debug`, 14 días).
 
 ## Estructura
 

@@ -1,8 +1,12 @@
-# AGENTS.md — AirService PRO
+# AGENTS.md — TecniClima
 
 App Android (Kotlin) de gestión para empresas de climatización/HVAC. Módulo único `:app`.
 UI en XML con ViewBinding (sin Compose), Room para persistencia, Navigation Component para la
 navegación por pestañas, tema oscuro Material.
+
+> Nota de naming: la app visible se llama **TecniClima**, pero el package sigue siendo
+> `com.airservice.pro`, la DB `airservice.db` y el FileProvider `${applicationId}.fileprovider`.
+> No los renombres sin avisar: rompen instalaciones existentes.
 
 ## Comandos
 
@@ -73,3 +77,16 @@ navegación por pestañas, tema oscuro Material.
 - Los importes de XML de fotos usan `coil.load(uri)`; para Coil 2.x el import es `coil.load`.
 - Formularios en diálogo (`MaterialAlertDialogBuilder`) construidos como objetos estáticos
   (`XForm.show(fragment, ...)`) en `ui/<módulo>/`.
+
+## Publicación
+
+- Repo público: `https://github.com/Mtkr125903/TecniClima` (remoto SSH `git@github.com:Mtkr125903/TecniClima.git`,
+  clave en `~/.ssh/id_tecniclima_ed25519`). El PAT de las tools MCP es **solo lectura**: no puede
+  crear repos, issues, PRs ni editar metadata; para eso se usa `git push` por SSH.
+- **Licencia:** PolyForm Noncommercial 1.0.0 (`LICENSE` + plantilla `LICENCIA-COMERCIAL.md`).
+  El uso comercial requiere licencia de pago: no cambiar a MIT/Apache/GPL sin avisar al usuario.
+- **CI:** `.github/workflows/android.yml` corre en cada push/PR a `main`:
+  `assembleDebug test lintDebug` (JDK 17, Android SDK 34) + artefacto `app-debug`.
+  No usar `android-actions/setup-android@v3`: en la imagen `ubuntu-26.04` falla al instalar el
+  paquete legacy `tools`; se usa el `sdkmanager` preinstalado en
+  `/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager`.
