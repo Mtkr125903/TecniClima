@@ -15,7 +15,9 @@ object FechaUtil {
     private const val PATRON_MOSTRAR = "dd/MM/yyyy"
     private const val PATRON_MOSTRAR_HORA = "dd/MM/yyyy HH:mm"
 
-    private fun formato(patron: String) = SimpleDateFormat(patron, Locale.getDefault())
+    // Locale fijo: los patrones ISO son numericos y no deben variar con el idioma del
+    // dispositivo (los digitos no-ascii romperian el orden lexicografico en SQLite).
+    private fun formato(patron: String) = SimpleDateFormat(patron, Locale.US)
 
     fun ahoraIso(): String = formato(PATRON_ISO).format(Date())
 
