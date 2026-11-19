@@ -201,7 +201,7 @@
     <string name="dialog_new_technician">Nuevo técnico</string>
     <string name="dialog_delete_title">Confirmar eliminación</string>
     <string name="dialog_delete_message">¿Eliminar «%1$s»? Esta acción no se puede deshacer.</string>
-    <string name="dialog_delete_client_message">Se eliminarán también sus equipos y servicios asociados.</string>
+    <string name="dialog_delete_client_message">Se eliminarán también sus equipos, fotos, servicios, presupuestos, comprobantes, trabajos y turnos asociados.</string>
     <string name="dialog_required_field">Completá los campos obligatorios.</string>
     <string name="dialog_select_client_first">Elegí primero un cliente.</string>
 

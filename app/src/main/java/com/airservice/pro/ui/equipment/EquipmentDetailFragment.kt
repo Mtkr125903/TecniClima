@@ -264,7 +264,7 @@ class EquipmentDetailFragment : Fragment() {
 
     companion object {
         private const val ARG_EQUIPMENT_ID = "equipmentId"
-        private const val TIPO_FOTO = "EQUIPMENT"
+        private const val TIPO_FOTO = PhotoStorage.TIPO_FOTO_EQUIPO
         private const val MAX_FOTOS = 6
 
         fun newInstance(equipmentId: Long) = EquipmentDetailFragment().apply {

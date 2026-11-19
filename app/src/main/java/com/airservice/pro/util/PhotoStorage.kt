@@ -15,6 +15,9 @@ object PhotoStorage {
 
     const val CARPETA = "fotos"
 
+    /** Tipo de foto adjunta a un equipo (columna photo.tipo). */
+    const val TIPO_FOTO_EQUIPO = "EQUIPMENT"
+
     /** Crea un archivo vacio para una foto nueva y devuelve su Uri. */
     fun nuevoArchivo(context: Context): Pair<File, Uri> {
         val carpeta = File(context.getExternalFilesDir(null) ?: context.filesDir, CARPETA)

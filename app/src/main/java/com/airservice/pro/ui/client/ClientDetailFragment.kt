@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.withTransaction
 import com.airservice.pro.R
 import com.airservice.pro.data.AppDatabase
 import com.airservice.pro.data.ClientEntity
@@ -20,6 +21,7 @@ import com.airservice.pro.ui.equipment.EquipmentAdapter
 import com.airservice.pro.ui.equipment.EquipmentForm
 import com.airservice.pro.ui.history.ServiceHistoryAdapter
 import com.airservice.pro.ui.receipt.ReceiptsAdapter
+import com.airservice.pro.util.PhotoStorage
 import com.airservice.pro.util.WhatsAppHelper
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.Dispatchers
@@ -143,11 +145,25 @@ class ClientDetailFragment : Fragment() {
             .setPositiveButton(R.string.action_delete) { _, _ ->
                 viewLifecycleOwner.lifecycleScope.launch {
                     withContext(Dispatchers.IO) {
-                        db.serviceDao().deleteByClient(cliente.id)
-                        db.equipmentDao().deleteByClient(cliente.id)
-                        db.budgetDao().deleteByClient(cliente.id)
-                        db.receiptDao().deleteByClient(cliente.id)
-                        db.clientDao().delete(cliente)
+                        val equipos = db.equipmentDao().listByClient(cliente.id)
+                        val fotos = equipos.flatMap {
+                            db.photoDao().getByOwner(PhotoStorage.TIPO_FOTO_EQUIPO, it.id)
+                        }
+                        db.withTransaction {
+                            db.workDao().deleteByClient(cliente.id)
+                            db.turnDao().deleteByClient(cliente.id)
+                            db.serviceDao().deleteByClient(cliente.id)
+                            db.budgetDao().deleteByClient(cliente.id)
+                            db.receiptDao().deleteByClient(cliente.id)
+                            equipos.forEach {
+                                db.photoDao().deleteByOwner(PhotoStorage.TIPO_FOTO_EQUIPO, it.id)
+                            }
+                            db.equipmentDao().deleteByClient(cliente.id)
+                            db.clientDao().delete(cliente)
+                        }
+                        // Los archivos fisicos se borran recien despues de confirmar la
+                        // transaccion: si la DB falla, no se pierden las fotos.
+                        fotos.forEach { PhotoStorage.borrarArchivo(requireContext(), it.uri) }
                     }
                     findNavController().navigateUp()
                 }

@@ -349,6 +349,9 @@ interface WorkDao {
     @Query("SELECT * FROM work WHERE id = :id")
     suspend fun getById(id: Long): WorkEntity?
 
+    @Query("DELETE FROM work WHERE clientId = :clientId")
+    suspend fun deleteByClient(clientId: Long)
+
     @Query("SELECT COUNT(*) FROM work")
     suspend fun count(): Int
 
@@ -395,6 +398,9 @@ interface TurnDao {
 
     @Query("SELECT * FROM turn WHERE id = :id")
     suspend fun getById(id: Long): TurnEntity?
+
+    @Query("DELETE FROM turn WHERE clientId = :clientId")
+    suspend fun deleteByClient(clientId: Long)
 
     @Query("SELECT COUNT(*) FROM turn")
     suspend fun count(): Int
