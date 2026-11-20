@@ -1,7 +1,8 @@
 # TecniClima
 
 App Android de gestión para empresas de climatización y HVAC (módulos de Clientes, Equipos,
-Historial de Servicios, Presupuestos, Comprobantes, Seguimiento de Trabajos y Agenda y Turnos).
+Historial de Servicios, Presupuestos, Comprobantes, Seguimiento de Trabajos, Agenda y Turnos,
+**Diagrama de Mollier** y Técnicos).
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-1.9.23-7F52FF.svg) ![Android](https://img.shields.io/badge/Android-24%2B-3DDC84.svg) ![Room](https://img.shields.io/badge/Room-2.6.1-FF6D00.svg)
 [![Android CI](https://github.com/Mtkr125903/TecniClima/actions/workflows/android.yml/badge.svg)](https://github.com/Mtkr125903/TecniClima/actions/workflows/android.yml)
@@ -16,6 +17,7 @@ Historial de Servicios, Presupuestos, Comprobantes, Seguimiento de Trabajos y Ag
 | Navegación | Navigation Component 2.7.7 (un subgrafo por pestaña) |
 | Imágenes | Coil 2.7.0 · cámara y galería sin permisos |
 | PDF | Generador propio (`util/PdfGenerator.kt`), sin librerías externas |
+| Mollier (P-h) | WebView local con Plotly.js empaquetado + motor termodinámico JS (tablas congeladas con CoolProp) |
 
 ## Requisitos
 
@@ -38,6 +40,7 @@ APK: `app/build/outputs/apk/debug/app-debug.apk`
 ```bash
 ./gradlew assembleDebug test lintDebug   # build + unit tests + lint
 ./gradlew connectedAndroidTest           # tests instrumentados (requiere emulador)
+node tools/mollier/probar_motor.js       # motor JS vs CoolProp
 ```
 
 Reportes: `app/build/reports/lint-results-debug.html`
@@ -56,13 +59,17 @@ app/src/main/java/com/airservice/pro/
 ├── data/                   # Entities.kt, Daos.kt, AppDb.kt (Room + migraciones)
 ├── ui/                     # un paquete por módulo + MainActivity (tabs/nav)
 │   ├── client/  equipment/  history/  budget/
-│   ├── receipt/ track/     agenda/    technician/
+│   ├── receipt/ track/     agenda/    technician/   mollier/
 │   └── common/UiHelpers.kt # estados vacíos, badges y colores
-└── util/                   # Fecha, Numero, PDF, fotos, compartir, WhatsApp
+└── util/                   # Fecha, Numero, PDF, fotos, compartir, WhatsApp, MollierValidacion
 ```
 
 - `res/navigation/nav_graph.xml`: cada pestaña es un subgrafo anidado, así conserva su propia pila.
+  Las 8 pestañas son Clientes, Equipos, Historial, Presupuestos, Comprobantes, Seguimiento,
+  Agenda y **Mollier** (al final, para no romper `irAPestana(6)`).
 - `res/values/strings.xml`: todo el texto visible de la app.
+- `tools/mollier/`: generador de tablas termodinámicas (`generar_datos.py`) y banco del motor JS
+  (`probar_motor.js`).
 - `especificaciones.md`: especificación funcional y de diseño del proyecto.
 - `AGENTS.md`: guía de trabajo para agentes (comandos, restricciones de red y migraciones).
 
@@ -78,6 +85,14 @@ app/src/main/java/com/airservice/pro/
   elegida se copia al almacenamiento propio de la app porque el acceso a la galería es temporal.
 - **Compartir PDFs**: requiere `ClipData.newRawUri` + `FLAG_GRANT_READ_URI_PERMISSION`, o el
   chooser falla con *Permission Denial*.
+- **Diagrama de Mollier (P-h)**: los assets `mollier.html`, `mollier.js`, `mollier_data.js` y
+  `plotly-basic.min.js` se cargan desde `file:///android_asset/`. `mollier_data.js` es
+  **generado** con `tools/mollier/generar_datos.py` (necesita `pip install CoolProp`) y se valida
+  con `node tools/mollier/probar_motor.js`. La app NO usa CoolProp en runtime: el motor JS
+  interpola las tablas congeladas. El puente JS→Kotlin es `window.evaluateCycle(json)` (objeto
+  JSON) y notifica con `Android.onCycleCalculated(json)`, `Android.onResultsCalculated(sh, sc,
+  tSatBaja, tSatAlta)` y `Android.onError(codigo)`. El parseo de entradas es estricto
+  (`util/MollierValidacion.kt`): `NumeroUtil.aNumero` convierte basura en 0 y no sirve.
 
 ## Licencia
 
