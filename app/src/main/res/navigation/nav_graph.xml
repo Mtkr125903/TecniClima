@@ -150,4 +150,10 @@
             android:label="@string/module_mollier" />
     </navigation>
 
+    <!-- ============ Empresa ============ -->
+    <fragment
+        android:id="@+id/companyProfileFragment"
+        android:name="com.airservice.pro.ui.profile.CompanyProfileFragment"
+        android:label="@string/module_company" />
+
 </navigation>

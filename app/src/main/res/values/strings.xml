@@ -136,6 +136,8 @@
     <string name="hint_matricula">Matrícula</string>
     <string name="hint_cuit">CUIT</string>
     <string name="hint_whatsapp">WhatsApp</string>
+    <string name="hint_telefono">Teléfono</string>
+    <string name="hint_direccion">Dirección</string>
     <string name="hint_alias">Alias de pago</string>
     <string name="hint_validity_days">Validez del presupuesto (días)</string>
     <string name="hint_deposit">Seña</string>
@@ -162,6 +164,14 @@
         <item>@string/estado_enviado</item>
         <item>@string/estado_cancelado</item>
     </string-array>
+
+    <!-- ================= Empresa ================= -->
+    <string name="action_select_photo">Seleccionar foto</string>
+    <string name="module_company">Empresa</string>
+    <string name="action_company">Datos de la empresa</string>
+    <string name="msg_profile_saved">Datos de la empresa guardados</string>
+    <string name="msg_profile_error">No se pudieron guardar los datos</string>
+    <string name="msg_first_profile">Completá los datos de la empresa para que los documentos tengan cabecera</string>
 
     <!-- ================= Fichas ================= -->
     <string name="label_client_data">Datos del cliente</string>

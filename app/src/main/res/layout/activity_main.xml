@@ -119,6 +119,22 @@
                 app:icon="@drawable/ic_whatsapp"
                 app:iconSize="16dp"
                 app:iconTint="@color/whatsapp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEmpresa"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/module_company"
+                android:textSize="11sp"
+                app:backgroundTint="@color/containerAlt"
+                app:icon="@drawable/ic_edit"
+                app:iconSize="16dp"
+                app:iconTint="@color/primary" />
         </LinearLayout>
     </LinearLayout>
 

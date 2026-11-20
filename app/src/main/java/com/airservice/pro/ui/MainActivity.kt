@@ -67,7 +67,8 @@ class MainActivity : AppCompatActivity() {
             R.id.comprobantesFragment,
             R.id.seguimientoFragment,
             R.id.agendaFragment,
-            R.id.mollierFragment
+            R.id.mollierFragment,
+            R.id.companyProfileFragment
         )
     }
 
@@ -208,6 +209,31 @@ class MainActivity : AppCompatActivity() {
         binding.btnAgenda.setOnClickListener { irAPestana(6) }
         binding.btnClientesEquipos.setOnClickListener { irAPestana(0) }
         binding.btnWhatsappRapido.setOnClickListener { mostrarSelectorWhatsApp() }
+        binding.btnEmpresa.setOnClickListener { abrirPerfilEmpresa() }
+
+        verificarPerfilPrimeraVez()
+    }
+
+    private fun abrirPerfilEmpresa() {
+        navController.navigate(R.id.companyProfileFragment)
+    }
+
+    private fun verificarPerfilPrimeraVez() {
+        val prefs = getSharedPreferences("prefs_profile_first_run", MODE_PRIVATE)
+        val avisado = prefs.getBoolean("avisado", false)
+        if (!avisado) {
+            lifecycleScope.launch {
+                val perfil = withContext(Dispatchers.IO) {
+                    AppDatabase.getInstance(applicationContext).companyProfileDao().get()
+                }
+                if (perfil == null || perfil.nombre.isBlank()) {
+                    Snackbar.make(binding.root, R.string.msg_first_profile, Snackbar.LENGTH_INDEFINITE)
+                        .setAction(R.string.module_company) { abrirPerfilEmpresa() }
+                        .show()
+                }
+                prefs.edit().putBoolean("avisado", true).apply()
+            }
+        }
     }
 
     private fun mostrarSelectorWhatsApp() {
