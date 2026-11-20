@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.nio.charset.Charset
+import java.util.Locale
 
 /**
  * Generador de PDF autocontenido (sin librerias externas).
@@ -34,6 +35,82 @@ object PdfGenerator {
     private const val COLOR_FONDO = "0.043 0.075 0.169"
     private const val COLOR_GRIS = "0.420 0.470 0.560"
 
+    /** Ancho de la tabla de renglones. */
+    private const val COL_CONCEPTO = 48f
+    private const val COL_CANTIDAD = 330f
+    private const val COL_PRECIO = 425f
+    private const val COL_SUBTOTAL = 547f
+
+    /**
+     * Anchos de los glifos de Helvetica en miles de em (valores de la
+     * especificacion Adobe). Sirven para alinear los importes a la derecha.
+     */
+    private val ANCHO_HELVETICA = mapOf(
+        ' ' to 278, '!' to 278, '"' to 355, '#' to 556, '$' to 556, '%' to 889,
+        '&' to 667, '\'' to 191, '(' to 333, ')' to 333, '*' to 389, '+' to 584,
+        ',' to 278, '-' to 333, '.' to 278, '/' to 278, ':' to 278, ';' to 278,
+        '<' to 584, '=' to 584, '>' to 584, '?' to 556, '@' to 1015,
+        '[' to 278, '\\' to 278, ']' to 278, '^' to 469, '_' to 556, '`' to 333,
+        '{' to 334, '|' to 260, '}' to 334, '~' to 584,
+        'A' to 667, 'B' to 667, 'C' to 722, 'D' to 722, 'E' to 667, 'F' to 611,
+        'G' to 778, 'H' to 722, 'I' to 278, 'J' to 500, 'K' to 667, 'L' to 556,
+        'M' to 833, 'N' to 722, 'O' to 778, 'P' to 667, 'Q' to 778, 'R' to 722,
+        'S' to 667, 'T' to 611, 'U' to 722, 'V' to 667, 'W' to 944, 'X' to 667,
+        'Y' to 667, 'Z' to 611,
+        'a' to 556, 'b' to 556, 'c' to 500, 'd' to 556, 'e' to 556, 'f' to 278,
+        'g' to 556, 'h' to 556, 'i' to 222, 'j' to 222, 'k' to 500, 'l' to 222,
+        'm' to 833, 'n' to 556, 'o' to 556, 'p' to 556, 'q' to 556, 'r' to 333,
+        's' to 500, 't' to 278, 'u' to 556, 'v' to 500, 'w' to 722, 'x' to 500,
+        'y' to 500, 'z' to 500,
+        '0' to 556, '1' to 556, '2' to 556, '3' to 556, '4' to 556,
+        '5' to 556, '6' to 556, '7' to 556, '8' to 556, '9' to 556
+    )
+
+    /** Helvetica-Bold: solo cambian los glifos de las mayusculas y la barra. */
+    private val ANCHO_HELVETICA_BOLD = ANCHO_HELVETICA + mapOf(
+        'A' to 722, 'B' to 722, 'C' to 722, 'D' to 722, 'E' to 667, 'F' to 611,
+        'G' to 778, 'H' to 722, 'I' to 278, 'J' to 556, 'K' to 722, 'L' to 611,
+        'M' to 833, 'N' to 722, 'O' to 778, 'P' to 667, 'Q' to 778, 'R' to 722,
+        'S' to 667, 'T' to 611, 'U' to 722, 'V' to 667, 'W' to 944, 'X' to 667,
+        'Y' to 667, 'Z' to 611,
+        'a' to 556, 'b' to 611, 'c' to 556, 'd' to 611, 'e' to 556, 'f' to 333,
+        'g' to 611, 'h' to 611, 'i' to 278, 'j' to 278, 'k' to 556, 'l' to 278,
+        'm' to 889, 'n' to 611, 'o' to 611, 'p' to 611, 'q' to 611, 'r' to 389,
+        's' to 556, 't' to 333, 'u' to 611, 'v' to 556, 'w' to 778, 'x' to 556,
+        'y' to 556, 'z' to 500,
+        ':' to 333, ';' to 333, '"' to 474, '(' to 333, ')' to 333, '/' to 278,
+        '\\' to 278, '[' to 333, ']' to 333, '@' to 975, '_' to 556, '?' to 611,
+        '!' to 333, '#' to 556, '$' to 556, '%' to 889, '&' to 722, '\'' to 238,
+        '*' to 389, '+' to 584, '<' to 584, '=' to 584, '>' to 584, '^' to 584,
+        '`' to 333, '{' to 389, '|' to 280, '}' to 389, '~' to 584
+    )
+
+    /** Renglon del presupuesto mostrado en el PDF. */
+    data class Renglon(
+        val concepto: String,
+        val cantidad: Double,
+        val precio: Double,
+        val subtotal: Double
+    )
+
+    /** Recargo del presupuesto mostrado en el PDF. */
+    data class Recargo(
+        val nombre: String,
+        val importe: Double
+    )
+
+    /**
+     * Encabezado con los datos de la empresa. Todos los campos son opcionales:
+     * los vacios no se imprimen.
+     */
+    data class Empresa(
+        val nombre: String = "",
+        val matricula: String = "",
+        val cuit: String = "",
+        val telefono: String = "",
+        val direccion: String = ""
+    )
+
     data class Documento(
         val titulo: String,
         val numero: String,
@@ -44,7 +121,10 @@ object PdfGenerator {
         val fecha: String,
         val detalle: String,
         val observacion: String,
-        val monto: String
+        val monto: String,
+        val renglones: List<Renglon> = emptyList(),
+        val recargos: List<Recargo> = emptyList(),
+        val empresa: Empresa? = null
     )
 
     // ------------------------------------------------------------------
@@ -94,6 +174,28 @@ object PdfGenerator {
 
         var y = ALTO - 126f
 
+        // --- Datos de la empresa (encabezado) ---
+        val empresa = doc.empresa
+        if (empresa != null) {
+            if (empresa.nombre.isNotBlank()) {
+                actual += texto(MARGEN, y, TAMANIO_CUERPO, "F2", empresa.nombre, COLOR_FONDO)
+                y -= INTERLINEADO + 2f
+            }
+            val contacto = listOfNotNull(
+                empresa.matricula.takeIf { it.isNotBlank() }?.let { "Matricula: $it" },
+                empresa.cuit.takeIf { it.isNotBlank() }?.let { "CUIT: $it" },
+                empresa.telefono.takeIf { it.isNotBlank() }?.let { "Tel: $it" },
+                empresa.direccion.takeIf { it.isNotBlank() }
+            )
+            if (contacto.isNotEmpty()) {
+                for (linea in envolver(contacto.joinToString(" | "), 88)) {
+                    actual += texto(MARGEN, y, TAMANIO_PIE + 1, "F1", linea, COLOR_GRIS)
+                    y -= INTERLINEADO - 2f
+                }
+                y -= 4f
+            }
+        }
+
         // --- Bloque de datos ---
         val etiquetaX = MARGEN
         val valorX = MARGEN + 92f
@@ -135,6 +237,91 @@ object PdfGenerator {
             y -= 8f
         }
 
+        // --- Renglones ---
+        if (doc.renglones.isNotEmpty()) {
+            if (y < 150f) {
+                paginas += actual
+                actual = mutableListOf()
+                y = ALTO - 90f
+            }
+            y -= 4f
+            actual += texto(MARGEN, y, TAMANIO_CUERPO, "F2", "Renglones", COLOR_GRIS)
+            y -= INTERLINEADO + 2f
+
+            val encabezadoRenglones = {
+                actual += texto(COL_CONCEPTO, y, TAMANIO_PIE + 1, "F2", "Concepto", COLOR_GRIS)
+                actual += textoDerecha(COL_CANTIDAD, y, TAMANIO_PIE + 1, "F2", "Cant.", COLOR_GRIS)
+                actual += textoDerecha(COL_PRECIO, y, TAMANIO_PIE + 1, "F2", "P. unit.", COLOR_GRIS)
+                actual += textoDerecha(COL_SUBTOTAL, y, TAMANIO_PIE + 1, "F2", "Subtotal", COLOR_GRIS)
+                y -= 4f
+                actual += lineaSeparadora(y + 5, COLOR_MARCA, 0.8f)
+                y -= INTERLINEADO
+            }
+            encabezadoRenglones()
+
+            for (renglon in doc.renglones) {
+                val lineas = envolver(renglon.concepto, 46)
+                val alto = maxOf(1, lineas.size) * INTERLINEADO
+                if (y - alto < 120f) {
+                    paginas += actual
+                    actual = mutableListOf()
+                    y = ALTO - 90f
+                    encabezadoRenglones()
+                }
+                val yFila = y
+                lineas.forEachIndexed { indice, linea ->
+                    actual += texto(
+                        COL_CONCEPTO,
+                        yFila - indice * INTERLINEADO,
+                        TAMANIO_CUERPO,
+                        "F1",
+                        linea,
+                        COLOR_FONDO
+                    )
+                }
+                actual += textoDerecha(
+                    COL_CANTIDAD, yFila, TAMANIO_CUERPO, "F1",
+                    numero(renglon.cantidad), COLOR_FONDO
+                )
+                actual += textoDerecha(
+                    COL_PRECIO, yFila, TAMANIO_CUERPO, "F1",
+                    NumeroUtil.monedaDecimal(renglon.precio.toString()), COLOR_FONDO
+                )
+                actual += textoDerecha(
+                    COL_SUBTOTAL, yFila, TAMANIO_CUERPO, "F1",
+                    NumeroUtil.monedaDecimal(renglon.subtotal.toString()), COLOR_FONDO
+                )
+                y -= alto
+            }
+            y -= 8f
+        }
+
+        // --- Recargos ---
+        if (doc.recargos.isNotEmpty()) {
+            if (y < 140f) {
+                paginas += actual
+                actual = mutableListOf()
+                y = ALTO - 90f
+            }
+            y -= 4f
+            actual += texto(MARGEN, y, TAMANIO_CUERPO, "F2", "Recargos", COLOR_GRIS)
+            y -= INTERLINEADO + 2f
+            for (recargo in doc.recargos) {
+                if (y < 120f) {
+                    paginas += actual
+                    actual = mutableListOf()
+                    y = ALTO - 90f
+                }
+                actual += texto(MARGEN, y, TAMANIO_CUERPO, "F1", recargo.nombre, COLOR_FONDO)
+                actual += textoDerecha(
+                    COL_SUBTOTAL, y, TAMANIO_CUERPO, "F1",
+                    NumeroUtil.monedaDecimal(recargo.importe.toString()), COLOR_FONDO
+                )
+                y -= INTERLINEADO
+            }
+            y -= 8f
+        }
+
         // --- Observacion ---
         if (doc.observacion.isNotBlank()) {
             actual += texto(MARGEN, y, TAMANIO_CUERPO, "F2", "Observacion", COLOR_GRIS)
@@ -151,6 +338,34 @@ object PdfGenerator {
             y -= 8f
         }
 
+        // --- Totales del desglose (solo si hay renglones o recargos) ---
+        if (doc.renglones.isNotEmpty() || doc.recargos.isNotEmpty()) {
+            if (y < 150f) {
+                paginas += actual
+                actual = mutableListOf()
+                y = ALTO - 90f
+            }
+            val subtotal = doc.renglones.sumOf { it.subtotal }
+            val totalRecargos = doc.recargos.sumOf { it.importe }
+            if (doc.renglones.isNotEmpty()) {
+                actual += texto(MARGEN, y, TAMANIO_CUERPO, "F1", "Subtotal", COLOR_FONDO)
+                actual += textoDerecha(
+                    COL_SUBTOTAL, y, TAMANIO_CUERPO, "F1",
+                    NumeroUtil.monedaDecimal(subtotal.toString()), COLOR_FONDO
+                )
+                y -= INTERLINEADO + 2f
+            }
+            if (doc.recargos.isNotEmpty()) {
+                actual += texto(MARGEN, y, TAMANIO_CUERPO, "F1", "Recargos", COLOR_FONDO)
+                actual += textoDerecha(
+                    COL_SUBTOTAL, y, TAMANIO_CUERPO, "F1",
+                    NumeroUtil.monedaDecimal(totalRecargos.toString()), COLOR_FONDO
+                )
+                y -= INTERLINEADO + 2f
+            }
+            y -= 4f
+        }
+
         // --- Total ---
         val totalTexto = NumeroUtil.monedaDecimal(doc.monto)
         val anchoTotal = 220f
@@ -161,8 +376,8 @@ object PdfGenerator {
         }
         actual += "q $COLOR_MARCA rg ${ANCHO - MARGEN - anchoTotal} ${y - 10} $anchoTotal 34 re f Q"
         actual += texto(ANCHO - MARGEN - anchoTotal + 16, y + 3, TAMANIO_CUERPO + 1, "F2", "TOTAL", COLOR_FONDO)
-        actual += texto(
-            ANCHO - MARGEN - 16 - 130, y + 3, TAMANIO_CUERPO + 3, "F2",
+        actual += textoDerecha(
+            ANCHO - MARGEN - 16, y + 3, TAMANIO_CUERPO + 3, "F2",
             totalTexto, COLOR_FONDO
         )
         y -= 34f
@@ -204,6 +419,38 @@ object PdfGenerator {
             if (actual.isNotEmpty()) lineas += actual.toString()
         }
         return lineas
+    }
+
+    /** Numero sin decimales sobrantes ni separador local: "1", "1.5". */
+    private fun numero(valor: Double): String {
+        if (valor == valor.toLong().toDouble()) return valor.toLong().toString()
+        return String.format(Locale.US, "%.2f", valor).trimEnd('0').trimEnd('.')
+    }
+
+    /**
+     * Ancho aproximado del texto en puntos. Se usan las metricas reales de
+     * Helvetica para poder alinear los importes a la derecha.
+     */
+    private fun anchoTexto(valor: String, size: Float, negrita: Boolean): Float {
+        val tabla = if (negrita) ANCHO_HELVETICA_BOLD else ANCHO_HELVETICA
+        var unidades = 0
+        for (caracter in valor) {
+            unidades += tabla[caracter] ?: 556
+        }
+        return unidades * size / 1000f
+    }
+
+    /** Texto alineado al borde derecho en [xDerecha]. */
+    private fun textoDerecha(
+        xDerecha: Float,
+        y: Float,
+        size: Float,
+        fuente: String,
+        valor: String,
+        color: String
+    ): String {
+        val x = xDerecha - anchoTexto(valor, size, fuente == "F2")
+        return texto(x, y, size, fuente, valor, color)
     }
 
     private fun texto(x: Float, y: Float, size: Float, fuente: String, valor: String, color: String): String {

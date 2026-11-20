@@ -25,6 +25,29 @@ class PdfGeneratorTest {
         monto = "87000"
     )
 
+    private fun documentoConRenglones() = documento().copy(
+        titulo = "Presupuesto",
+        numero = "PRE-0001",
+        monto = "115000",
+        renglones = listOf(
+            PdfGenerator.Renglon(
+                concepto = "Carga de gas R410A",
+                cantidad = 1.0,
+                precio = 45000.0,
+                subtotal = 45000.0
+            ),
+            PdfGenerator.Renglon(
+                concepto = "Limpieza de filtros y cambio de presostato",
+                cantidad = 2.0,
+                precio = 25000.0,
+                subtotal = 50000.0
+            )
+        ),
+        recargos = listOf(
+            PdfGenerator.Recargo(nombre = "Urgencia", importe = 20000.0)
+        )
+    )
+
     @Test
     fun `genera un pdf con cabecera y cierre correctos`() {
         val destino = File(temp.newFolder(), "comprobante.pdf")
@@ -101,5 +124,40 @@ class PdfGeneratorTest {
         assertTrue(textoPre.contains("Presupuesto de servicios"))
         assertTrue(textoRec.contains("Comprobante de servicio"))
         assertTrue(textoPre.contains("TecniClima"))
+    }
+
+    @Test
+    fun `el PDF muestra los renglones, recargos y totales del desglose`() {
+        val destino = File(temp.newFolder(), "desglose.pdf")
+        PdfGenerator.generarPresupuesto(documentoConRenglones(), destino)
+
+        val contenido = destino.readBytes()
+        val texto = String(contenido, Charsets.ISO_8859_1)
+
+        // Conceptos y cantidades
+        assertTrue(texto.contains("Carga de gas R410A"))
+        assertTrue(texto.contains("Limpieza de filtros y cambio de presostato"))
+        assertTrue(texto.contains("Urgencia"))
+        // Encabezados de tabla y totales
+        assertTrue(texto.contains("Concepto"))
+        assertTrue(texto.contains("Subtotal"))
+        assertTrue(texto.contains("Recargos"))
+        assertTrue(texto.contains("TOTAL"))
+        // El monto total del presupuesto
+        assertTrue(texto.contains("$ 115.000"))
+    }
+
+    @Test
+    fun `un presupuesto sin renglones ni recargos no incluye la tabla ni los totales`() {
+        val destino = File(temp.newFolder(), "simple.pdf")
+        PdfGenerator.generarPresupuesto(documento(), destino)
+
+        val texto = String(destino.readBytes(), Charsets.ISO_8859_1)
+
+        assertTrue(texto.contains("TOTAL"))
+        assertTrue("no debe mostrar el encabezado de la tabla de renglones",
+            !texto.contains("Concepto"))
+        assertTrue("no debe mostrar la linea de subtotal del desglose",
+            !texto.contains("Subtotal"))
     }
 }

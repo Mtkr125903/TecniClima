@@ -51,8 +51,12 @@ class PresupuestosFragment : Fragment() {
 
         adapter = PresupuestosAdapter(
             onClick = { abrirOpciones(it) },
-            onAprobar = { cambiarEstado(it, "Aprobado", R.string.msg_budget_approved) },
-            onRechazar = { cambiarEstado(it, "Rechazado", R.string.msg_budget_rejected) },
+            onAprobar = {
+                cambiarEstado(it, getString(R.string.estado_aprobado), R.string.msg_budget_approved)
+            },
+            onRechazar = {
+                cambiarEstado(it, getString(R.string.estado_rechazado), R.string.msg_budget_rejected)
+            },
             onWhatsApp = { enviarPorWhatsApp(it) },
             onPdf = { generarPdf(it) }
         )
@@ -133,6 +137,37 @@ class PresupuestosFragment : Fragment() {
         val presupuesto = row.presupuesto
         viewLifecycleOwner.lifecycleScope.launch {
             val contexto = requireContext()
+            val db = AppDatabase.getInstance(contexto)
+            val renglones = withContext(Dispatchers.IO) {
+                db.budgetItemDao().getByBudget(presupuesto.id)
+            }.map {
+                PdfGenerator.Renglon(
+                    concepto = it.concepto,
+                    cantidad = it.cantidad,
+                    precio = NumeroUtil.aNumero(it.precio),
+                    subtotal = NumeroUtil.aNumero(it.subtotal)
+                )
+            }
+            val recargos = withContext(Dispatchers.IO) {
+                db.budgetChargeDao().getByBudget(presupuesto.id)
+            }.map {
+                PdfGenerator.Recargo(
+                    nombre = it.nombre,
+                    importe = NumeroUtil.aNumero(it.importe)
+                )
+            }
+            val empresa = withContext(Dispatchers.IO) {
+                db.companyProfileDao().get()
+            }?.let {
+                PdfGenerator.Empresa(
+                    nombre = it.nombre,
+                    matricula = it.matricula,
+                    cuit = it.cuit,
+                    telefono = it.telefono,
+                    direccion = it.direccion
+                )
+            }
+
             val doc = PdfGenerator.Documento(
                 titulo = getString(R.string.pdf_title_budget),
                 numero = presupuesto.numero,
@@ -143,7 +178,10 @@ class PresupuestosFragment : Fragment() {
                 fecha = FechaUtil.mostrar(presupuesto.fecha),
                 detalle = presupuesto.detalle,
                 observacion = "",
-                monto = presupuesto.monto
+                monto = presupuesto.monto,
+                renglones = renglones,
+                recargos = recargos,
+                empresa = empresa
             )
             val destino = PdfStorage.archivo(contexto, "presupuesto", presupuesto.numero)
             val ok = withContext(Dispatchers.IO) {

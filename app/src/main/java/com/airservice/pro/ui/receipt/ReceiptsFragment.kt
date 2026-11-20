@@ -142,6 +142,18 @@ class ReceiptsFragment : Fragment() {
         val comprobante = row.comprobante
         viewLifecycleOwner.lifecycleScope.launch {
             val contexto = requireContext()
+            val db = AppDatabase.getInstance(contexto)
+            val empresa = withContext(Dispatchers.IO) {
+                db.companyProfileDao().get()
+            }?.let {
+                PdfGenerator.Empresa(
+                    nombre = it.nombre,
+                    matricula = it.matricula,
+                    cuit = it.cuit,
+                    telefono = it.telefono,
+                    direccion = it.direccion
+                )
+            }
             val doc = PdfGenerator.Documento(
                 titulo = getString(R.string.pdf_title_receipt),
                 numero = comprobante.numero,
@@ -152,7 +164,8 @@ class ReceiptsFragment : Fragment() {
                 fecha = FechaUtil.mostrar(comprobante.fecha),
                 detalle = comprobante.detalle,
                 observacion = comprobante.observacion,
-                monto = comprobante.monto
+                monto = comprobante.monto,
+                empresa = empresa
             )
             val destino = PdfStorage.archivo(contexto, "comprobante", comprobante.numero)
             val ok = withContext(Dispatchers.IO) {
