@@ -52,7 +52,8 @@ class MainActivity : AppCompatActivity() {
             TabData(R.id.presupuestos_nav, R.id.presupuestosFragment, R.string.module_budget, R.drawable.ic_budget),
             TabData(R.id.comprobantes_nav, R.id.comprobantesFragment, R.string.module_receipt, R.drawable.ic_receipt),
             TabData(R.id.seguimiento_nav, R.id.seguimientoFragment, R.string.module_track, R.drawable.ic_work),
-            TabData(R.id.agenda_nav, R.id.agendaFragment, R.string.module_agenda, R.drawable.ic_calendar)
+            TabData(R.id.agenda_nav, R.id.agendaFragment, R.string.module_agenda, R.drawable.ic_calendar),
+            TabData(R.id.mollier_nav, R.id.mollierFragment, R.string.module_mollier, R.drawable.ic_mollier)
         )
     }
 
@@ -65,7 +66,8 @@ class MainActivity : AppCompatActivity() {
             R.id.presupuestosFragment,
             R.id.comprobantesFragment,
             R.id.seguimientoFragment,
-            R.id.agendaFragment
+            R.id.agendaFragment,
+            R.id.mollierFragment
         )
     }
 

@@ -55,7 +55,13 @@ class DaoTest {
     @Test
     fun losJOINsDevuelvenLosDatosRelacionados() = runBlocking {
         val clienteId = db.clientDao().insert(
-            ClientEntity("Taller", "1155550002", "taller@correo.com", "Ruta 8", "")
+            ClientEntity(
+                nombre = "Taller",
+                telefono = "1155550002",
+                email = "taller@correo.com",
+                direccion = "Ruta 8",
+                notas = ""
+            )
         )
         val equipoId = db.equipmentDao().insert(
             EquipmentEntity(
@@ -106,13 +112,37 @@ class DaoTest {
     @Test
     fun losTurnosSeFiltranPorFecha() = runBlocking {
         val clienteId = db.clientDao().insert(
-            ClientEntity("Cliente", "1155550003", "c@correo.com", "", "")
+            ClientEntity(
+                nombre = "Cliente",
+                telefono = "1155550003",
+                email = "c@correo.com",
+                direccion = "",
+                notas = ""
+            )
         )
         db.turnDao().insert(
-            TurnEntity(clienteId, 0, "Visita 1", "2024-05-01", "09:00", "Calle 1", "Pendiente", "")
+            TurnEntity(
+                clientId = clienteId,
+                technicianId = 0,
+                titulo = "Visita 1",
+                fecha = "2024-05-01",
+                hora = "09:00",
+                direccion = "Calle 1",
+                estado = "Pendiente",
+                notas = ""
+            )
         )
         db.turnDao().insert(
-            TurnEntity(clienteId, 0, "Visita 2", "2024-05-02", "10:00", "Calle 2", "Pendiente", "")
+            TurnEntity(
+                clientId = clienteId,
+                technicianId = 0,
+                titulo = "Visita 2",
+                fecha = "2024-05-02",
+                hora = "10:00",
+                direccion = "Calle 2",
+                estado = "Pendiente",
+                notas = ""
+            )
         )
 
         val delDia = db.turnDao().observeByDate("2024-05-01").first()
@@ -123,13 +153,40 @@ class DaoTest {
     @Test
     fun eliminarClienteBorraEnCascadaLosRegistrosRelacionados() = runBlocking {
         val clienteId = db.clientDao().insert(
-            ClientEntity("Cliente", "1155550004", "c@correo.com", "", "")
+            ClientEntity(
+                nombre = "Cliente",
+                telefono = "1155550004",
+                email = "c@correo.com",
+                direccion = "",
+                notas = ""
+            )
         )
         db.equipmentDao().insert(
-            EquipmentEntity(clienteId, "Split", "LG", "Cool", "S-1", "2024-01-01", "", "", "R32", "", "")
+            EquipmentEntity(
+                clientId = clienteId,
+                type = "Split",
+                brand = "LG",
+                model = "Cool",
+                serial = "S-1",
+                installDate = "2024-01-01",
+                capacityW = "",
+                capacityBtu = "",
+                gas = "R32",
+                location = "",
+                direccion = ""
+            )
         )
         db.serviceDao().insert(
-            ServiceEntity(clienteId, 0, "Reparación", "Cambio", "Pendiente", "2024-01-02 10:00", 0, "")
+            ServiceEntity(
+                clientId = clienteId,
+                equipmentId = 0,
+                tipo = "Reparación",
+                descripcion = "Cambio",
+                estado = "Pendiente",
+                fecha = "2024-01-02 10:00",
+                technicianId = 0,
+                costo = ""
+            )
         )
 
         db.serviceDao().deleteByClient(clienteId)

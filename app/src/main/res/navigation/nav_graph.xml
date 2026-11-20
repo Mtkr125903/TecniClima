@@ -83,6 +83,27 @@
             android:id="@+id/presupuestosFragment"
             android:name="com.airservice.pro.ui.budget.PresupuestosFragment"
             android:label="@string/module_budget" />
+
+        <fragment
+            android:id="@+id/budgetEditFragment"
+            android:name="com.airservice.pro.ui.budget.BudgetEditFragment"
+            android:label="@string/module_budget">
+
+            <argument
+                android:name="budgetId"
+                android:defaultValue="0L"
+                app:argType="long" />
+
+            <argument
+                android:name="clientId"
+                android:defaultValue="0L"
+                app:argType="long" />
+
+            <argument
+                android:name="equipmentId"
+                android:defaultValue="0L"
+                app:argType="long" />
+        </fragment>
     </navigation>
 
     <!-- ============ Comprobantes ============ -->
@@ -116,6 +137,17 @@
             android:id="@+id/agendaFragment"
             android:name="com.airservice.pro.ui.agenda.AgendaFragment"
             android:label="@string/module_agenda" />
+    </navigation>
+
+    <!-- ============ Mollier ============ -->
+    <navigation
+        android:id="@+id/mollier_nav"
+        app:startDestination="@id/mollierFragment">
+
+        <fragment
+            android:id="@+id/mollierFragment"
+            android:name="com.airservice.pro.ui.mollier.MollierFragment"
+            android:label="@string/module_mollier" />
     </navigation>
 
 </navigation>

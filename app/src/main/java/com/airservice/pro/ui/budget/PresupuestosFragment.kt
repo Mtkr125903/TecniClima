@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.airservice.pro.R
 import com.airservice.pro.data.AppDatabase
@@ -57,7 +59,7 @@ class PresupuestosFragment : Fragment() {
         binding.rvPresupuestos.layoutManager = LinearLayoutManager(requireContext())
         binding.rvPresupuestos.adapter = adapter
 
-        binding.fabAgregar.setOnClickListener { BudgetForm.show(this, null) }
+        binding.fabAgregar.setOnClickListener { abrirEditor(0L) }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -79,11 +81,18 @@ class PresupuestosFragment : Fragment() {
             .setTitle(presupuesto.numero)
             .setItems(opciones) { _, which ->
                 when (which) {
-                    0 -> BudgetForm.show(this, presupuesto)
+                    0 -> abrirEditor(presupuesto.id)
                     1 -> confirmarEliminar(presupuesto)
                 }
             }
             .show()
+    }
+
+    private fun abrirEditor(budgetId: Long) {
+        findNavController().navigate(
+            R.id.budgetEditFragment,
+            bundleOf(BudgetEditFragment.ARG_BUDGET_ID to budgetId)
+        )
     }
 
     private fun cambiarEstado(row: PresupuestoRow, estado: String, mensaje: Int) {

@@ -42,7 +42,7 @@ navegación por pestañas, tema oscuro Material.
 
 - **Una pestaña = un subgrafo anidado** en `res/navigation/nav_graph.xml` (`clientes_nav`,
   `equipos_nav`, `historial_nav`, `presupuestos_nav`, `comprobantes_nav`, `seguimiento_nav`,
-  `agenda_nav`). `ui/MainActivity.kt` es el dueño del `NavController`, del toolbar
+  `agenda_nav`, `mollier_nav`). `ui/MainActivity.kt` es el dueño del `NavController`, del toolbar
   (`setupActionBarWithNavController`) y del `TabLayout`.
 - Al cambiar de pestaña se usa `setPopUpTo(startDestination, false, true)` (saveState) +
   `setRestoreState(true)` para que cada pestaña conserve su pila (abrir una ficha, ir a otra
@@ -64,6 +64,18 @@ navegación por pestañas, tema oscuro Material.
 - **PDF:** generador propio `util/PdfGenerator.kt` (sin librería externa). Para compartir PDFs,
   `util/ShareHelper.kt` necesita `ClipData.newRawUri` + `FLAG_GRANT_READ_URI_PERMISSION` (con solo
   el flag en el intent, el chooser falla con Permission Denial).
+- **Mollier (P-h):** todo vive en `assets/` (`mollier.html`, `mollier.js`, `mollier_data.js`,
+  `plotly-basic.min.js`) y se carga en un WebView con `file:///android_asset/mollier.html`.
+  - `mollier_data.js` es **generado**: `tools/mollier/generar_datos.py` (necesita `pip install
+    CoolProp`) congela las tablas de R410A/R134a/R32/R290. **No editar el asset a mano**: se
+    regenera y se valida contra CoolProp con `node tools/mollier/probar_motor.js`.
+  - La app NO usa CoolProp en runtime. El motor JS interpola las tablas congeladas.
+  - El puente es `window.evaluateCycle(json)` (recibe un **objeto** JSON, no un string) y
+    notifica a Kotlin con `Android.onCycleCalculated(json)`, `Android.onResultsCalculated(sh, sc,
+    tSatBaja, tSatAlta)` y `Android.onError(codigo)`. Los códigos de error son strings
+    compartidos con `MollierFragment`.
+  - El parseo numérico nativo es estricto (`util/MollierValidacion.kt`): `NumeroUtil.aNumero`
+    convierte basura en 0 y no sirve para validar.
 
 ## Convenciones del código
 

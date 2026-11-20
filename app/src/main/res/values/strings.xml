@@ -12,6 +12,8 @@
     <string name="module_track">Seguimiento</string>
     <string name="module_agenda">Agenda</string>
     <string name="module_technician">Técnicos</string>
+    <string name="module_settings">Ajustes</string>
+    <string name="module_mollier">Mollier</string>
 
     <!-- ================= Accesos directos ================= -->
     <string name="action_agenda">Agenda y Turnos</string>
@@ -36,6 +38,14 @@
     <string name="action_to_budget">Convertir en presupuesto</string>
     <string name="action_to_receipt">Generar comprobante</string>
     <string name="action_add_equipment">Agregar equipo</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="action_pick_logo">Elegir logo</string>
+    <string name="action_remove_logo">Quitar logo</string>
+    <string name="action_add_item">Agregar renglón</string>
+    <string name="action_add_charge">Agregar recargo</string>
+    <string name="action_apply_template">Aplicar plantilla</string>
+    <string name="action_send_pdf">Enviar PDF por WhatsApp</string>
+    <string name="action_send_text">Enviar solo mensaje</string>
     <string name="label_client_detail">Ficha de cliente</string>
     <string name="label_equipment_detail">Ficha de equipo</string>
     <string name="msg_back_again">Presioná otra vez para salir</string>
@@ -122,6 +132,25 @@
     <string name="hint_speciality">Especialidad</string>
     <string name="hint_search_client">Buscar cliente…</string>
     <string name="hint_search_equipment">Buscar equipo o serie…</string>
+    <string name="hint_company_name">Nombre o razón social</string>
+    <string name="hint_matricula">Matrícula</string>
+    <string name="hint_cuit">CUIT</string>
+    <string name="hint_whatsapp">WhatsApp</string>
+    <string name="hint_alias">Alias de pago</string>
+    <string name="hint_validity_days">Validez del presupuesto (días)</string>
+    <string name="hint_deposit">Seña</string>
+    <string name="hint_warranty">Garantía</string>
+    <string name="hint_includes">Incluye</string>
+    <string name="hint_not_includes">No incluye</string>
+    <string name="hint_template">Plantilla</string>
+    <string name="hint_item_concept">Concepto</string>
+    <string name="hint_item_quantity">Cantidad</string>
+    <string name="hint_item_price">Precio unitario ($)</string>
+    <string name="hint_charge">Recargo</string>
+    <string name="hint_charge_value">Valor</string>
+    <string name="hint_charge_name">Nombre del recargo</string>
+    <string name="label_activo">Activo</string>
+    <string name="label_temporada">Temporada</string>
 
     <!-- ================= Fichas ================= -->
     <string name="label_client_data">Datos del cliente</string>
@@ -139,6 +168,20 @@
     <string name="label_schedule">Turno</string>
     <string name="label_amount">Total</string>
     <string name="label_detail_lines">Detalle</string>
+    <string name="label_company_data">Datos de la empresa</string>
+    <string name="label_logo">Logo</string>
+    <string name="label_budget_data">Datos del presupuesto</string>
+    <string name="label_estado">Estado</string>
+    <string name="label_templates">Plantillas</string>
+    <string name="label_items">Renglones</string>
+    <string name="label_charges">Recargos</string>
+    <string name="label_conditions">Condiciones</string>
+    <string name="label_subtotal">Subtotal</string>
+    <string name="label_expired">Vencido</string>
+    <string name="label_expires">Vence %1$s</string>
+    <string name="charge_mode_percentage">Porcentaje (%)</string>
+    <string name="charge_mode_amount">Monto ($)</string>
+    <string name="label_valid_until">Válido hasta %1$s</string>
 
     <!-- ================= Diálogos ================= -->
     <string name="dialog_new_client">Nuevo cliente</string>
@@ -147,6 +190,9 @@
     <string name="dialog_edit_equipment">Editar equipo</string>
     <string name="dialog_new_budget">Nuevo presupuesto</string>
     <string name="dialog_edit_budget">Editar presupuesto</string>
+    <string name="dialog_add_item">Agregar renglón</string>
+    <string name="dialog_edit_item">Editar renglón</string>
+    <string name="dialog_add_charge">Agregar recargo</string>
     <string name="dialog_new_receipt">Nuevo comprobante</string>
     <string name="dialog_new_service">Registrar servicio</string>
     <string name="dialog_new_work">Nuevo trabajo</string>
@@ -162,6 +208,8 @@
     <!-- ================= Formatos ================= -->
     <string name="currency_format">$ %1$s</string>
     <string name="progress_format">%1$d%%</string>
+    <string name="item_detail_format">%1$s × %2$s</string>
+    <string name="charge_percentage_format">%1$s %% del subtotal</string>
     <string name="date_display">dd/MM/yyyy</string>
     <string name="datetime_display">dd/MM/yyyy HH:mm</string>
 
@@ -181,6 +229,16 @@
     <string name="msg_receipt_paid">Comprobante marcado como pagado</string>
     <string name="msg_receipt_sent">Comprobante marcado como enviado</string>
     <string name="msg_work_updated">Avance actualizado</string>
+    <string name="msg_logo_saved">Logo actualizado</string>
+    <string name="msg_logo_error">No se pudo guardar el logo</string>
+    <string name="msg_no_items">Sin renglones: podés cargar el monto a mano.</string>
+    <string name="msg_amount_auto">Si hay renglones, el total se calcula solo.</string>
+    <string name="msg_item_required">Completá concepto, cantidad y precio.</string>
+    <string name="msg_charge_required">Elegí un recargo.</string>
+    <string name="msg_template_applied">Plantilla aplicada</string>
+    <string name="msg_select_template">Elegí una plantilla.</string>
+    <string name="msg_replace_items">La plantilla reemplaza los renglones actuales. ¿Querés continuar?</string>
+    <string name="msg_budget_saved">Presupuesto guardado</string>
 
     <!-- ================= PDF / WhatsApp ================= -->
     <string name="pdf_title_receipt">Comprobante de Servicio</string>
@@ -201,6 +259,47 @@
     <string name="whatsapp_receipt_body">Hola %1$s, te enviamos el comprobante %2$s por %3$s de TecniClima.</string>
     <string name="whatsapp_budget_body">Hola %1$s, te enviamos el presupuesto %2$s por %3$s de TecniClima.</string>
     <string name="whatsapp_generic_body">Hola %1$s, te escribimos desde TecniClima.</string>
+
+    <!-- ================= Diagrama de Mollier ================= -->
+    <string name="mollier_data_title">Datos del ciclo</string>
+    <string name="mollier_results_title">Resultados</string>
+    <string name="mollier_refrigerant">Refrigerante</string>
+    <string name="mollier_p_low">Presión baja (kPa)</string>
+    <string name="mollier_p_high">Presión alta (kPa)</string>
+    <string name="mollier_t_suction">Temp. succión (°C)</string>
+    <string name="mollier_t_liquid">Temp. líquido (°C)</string>
+    <string name="mollier_calculate">Calcular</string>
+    <string name="mollier_sh_label">Sobrecalentamiento</string>
+    <string name="mollier_sc_label">Subenfriamiento</string>
+    <string name="mollier_cop_label">COP</string>
+    <string name="mollier_ratio_label">Razón de compresión</string>
+    <string name="mollier_t2_label">Temp. descarga</string>
+    <string name="mollier_h1_label">h entrada compresor</string>
+    <string name="mollier_h2_label">h descarga compresor</string>
+    <string name="mollier_x4_label">Calidad mezcla</string>
+    <string name="mollier_tsat_low_label">T sat. baja</string>
+    <string name="mollier_tsat_high_label">T sat. alta</string>
+    <string name="mollier_q1_label">Calor absorbido</string>
+    <string name="mollier_q2_label">Calor rechazado</string>
+    <string name="mollier_value_pending">—</string>
+    <string name="mollier_valor_kelvin">%1$s K</string>
+    <string name="mollier_valor_celsius">%1$s °C</string>
+    <string name="mollier_valor_kjkg">%1$s kJ/kg</string>
+    <string name="mollier_valor_porcentaje">%1$s %%</string>
+    <string name="mollier_warning_r290">El R-290 (propano) es inflamable: verificá los requisitos de seguridad de la instalación antes de usarlo.</string>
+    <string name="mollier_error_refrigerante">Elegí un refrigerante válido.</string>
+    <string name="mollier_error_presion_baja">La presión baja no es un número válido.</string>
+    <string name="mollier_error_presion_alta">La presión alta no es un número válido.</string>
+    <string name="mollier_error_presion_rango">La presión debe estar entre 40 y 6000 kPa.</string>
+    <string name="mollier_error_presion_alta_menor">La presión alta tiene que ser mayor que la baja.</string>
+    <string name="mollier_error_t_succion">La temperatura de succión no es un número válido.</string>
+    <string name="mollier_error_t_liquido">La temperatura del líquido no es un número válido.</string>
+    <string name="mollier_error_t_rango">La temperatura debe estar entre -50 y 130 °C.</string>
+    <string name="mollier_error_sh_negativo">La succión está por debajo de la saturación: no hay sobrecalentamiento.</string>
+    <string name="mollier_error_sc_negativo">El líquido está por encima de la saturación: no hay subenfriamiento.</string>
+    <string name="mollier_error_t2_fuera">La temperatura de descarga supera el rango del diagrama.</string>
+    <string name="mollier_error_generico">No se pudo calcular el ciclo.</string>
+    <string name="mollier_error_cargando">El diagrama todavía está cargando.</string>
 
     <!-- ================= Content descriptions ================= -->
     <string name="cd_add">Agregar</string>

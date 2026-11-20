@@ -317,6 +317,7 @@ interface WorkDao {
         """
         SELECT w.*,
                COALESCE(c.nombre, '') AS clienteNombre,
+               COALESCE(c.telefono, '') AS clienteTelefono,
                COALESCE(t.nombre, '') AS tecnicoNombre,
                COALESCE(NULLIF(TRIM(e.brand || ' ' || e.model), ''), '') AS equipoDescripcion
         FROM work w
@@ -332,6 +333,7 @@ interface WorkDao {
         """
         SELECT w.*,
                COALESCE(c.nombre, '') AS clienteNombre,
+               COALESCE(c.telefono, '') AS clienteTelefono,
                COALESCE(t.nombre, '') AS tecnicoNombre,
                COALESCE(NULLIF(TRIM(e.brand || ' ' || e.model), ''), '') AS equipoDescripcion
         FROM work w
@@ -445,4 +447,109 @@ interface PhotoDao {
 
     @Query("DELETE FROM photo WHERE tipo = :tipo AND ownerId = :ownerId")
     suspend fun deleteByOwner(tipo: String, ownerId: Long)
+}
+
+/** Perfil de la empresa: una sola fila (id = 1). */
+@Dao
+interface CompanyProfileDao {
+    @Query("SELECT * FROM company_profile WHERE id = 1")
+    fun observe(): Flow<CompanyProfileEntity?>
+
+    @Query("SELECT * FROM company_profile WHERE id = 1")
+    suspend fun get(): CompanyProfileEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(profile: CompanyProfileEntity)
+}
+
+/** Catalogo de trabajos con precio de referencia. */
+@Dao
+interface CatalogDao {
+    @Query("SELECT * FROM catalog_item WHERE activo = 1 ORDER BY familia ASC, concepto ASC")
+    suspend fun getActivos(): List<CatalogItemEntity>
+
+    @Query("SELECT * FROM catalog_item ORDER BY familia ASC, concepto ASC")
+    fun observeAll(): Flow<List<CatalogItemEntity>>
+
+    @Query("SELECT COUNT(*) FROM catalog_item")
+    suspend fun count(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(item: CatalogItemEntity): Long
+}
+
+/** Recargos disponibles para sumar a un presupuesto. */
+@Dao
+interface ChargeCatalogDao {
+    @Query("SELECT * FROM charge_catalog WHERE activo = 1 ORDER BY nombre ASC")
+    suspend fun getActivos(): List<ChargeCatalogEntity>
+
+    @Query("SELECT COUNT(*) FROM charge_catalog")
+    suspend fun count(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(charge: ChargeCatalogEntity): Long
+}
+
+/** Renglones de un presupuesto. */
+@Dao
+interface BudgetItemDao {
+    @Query("SELECT * FROM budget_item WHERE budgetId = :budgetId ORDER BY orden ASC, id ASC")
+    suspend fun getByBudget(budgetId: Long): List<BudgetItemEntity>
+
+    @Query("SELECT COUNT(*) FROM budget_item")
+    suspend fun count(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(item: BudgetItemEntity): Long
+
+    @Update
+    suspend fun update(item: BudgetItemEntity)
+
+    @Delete
+    suspend fun delete(item: BudgetItemEntity)
+
+    @Query("DELETE FROM budget_item WHERE budgetId = :budgetId")
+    suspend fun deleteByBudget(budgetId: Long)
+}
+
+/** Recargos aplicados a un presupuesto. */
+@Dao
+interface BudgetChargeDao {
+    @Query("SELECT * FROM budget_charge WHERE budgetId = :budgetId ORDER BY orden ASC, id ASC")
+    suspend fun getByBudget(budgetId: Long): List<BudgetChargeEntity>
+
+    @Query("SELECT COUNT(*) FROM budget_charge")
+    suspend fun count(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(charge: BudgetChargeEntity): Long
+
+    @Update
+    suspend fun update(charge: BudgetChargeEntity)
+
+    @Delete
+    suspend fun delete(charge: BudgetChargeEntity)
+
+    @Query("DELETE FROM budget_charge WHERE budgetId = :budgetId")
+    suspend fun deleteByBudget(budgetId: Long)
+}
+
+/** Plantillas de presupuesto y sus renglones. */
+@Dao
+interface BudgetTemplateDao {
+    @Query("SELECT * FROM budget_template WHERE activo = 1 ORDER BY familia ASC, nombre ASC")
+    suspend fun getActivos(): List<BudgetTemplateEntity>
+
+    @Query("SELECT * FROM budget_template_item WHERE templateId = :templateId ORDER BY orden ASC, id ASC")
+    suspend fun getItems(templateId: Long): List<BudgetTemplateItemEntity>
+
+    @Query("SELECT COUNT(*) FROM budget_template")
+    suspend fun count(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(template: BudgetTemplateEntity): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertItem(item: BudgetTemplateItemEntity): Long
 }
