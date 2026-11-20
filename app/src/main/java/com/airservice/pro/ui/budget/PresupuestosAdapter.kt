@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.airservice.pro.R
 import com.airservice.pro.data.PresupuestoRow
 import com.airservice.pro.databinding.ItemPresupuestoBinding
 import com.airservice.pro.ui.common.UiHelpers
@@ -44,7 +45,7 @@ class PresupuestosAdapter(
             ).joinToString(" · ")
             binding.tvCliente.text = detalle.ifBlank { "Sin cliente asignado" }
 
-            val pendiente = budget.estado == "Pendiente de aprobación"
+            val pendiente = budget.estado == binding.root.context.getString(R.string.estado_pendiente_aprobacion)
             binding.btnAprobar.visibility = if (pendiente) View.VISIBLE else View.GONE
             binding.btnRechazar.visibility = if (pendiente) View.VISIBLE else View.GONE
 

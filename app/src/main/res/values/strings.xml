@@ -152,6 +152,17 @@
     <string name="label_activo">Activo</string>
     <string name="label_temporada">Temporada</string>
 
+    <!-- ================= Estados de presupuesto ================= -->
+    <!-- El texto es parte del dato guardado: debe coincidir con lo que
+         espera UiHelpers.colorEstado() para pintar el color del estado. -->
+    <string-array name="presupuesto_estados">
+        <item>@string/estado_pendiente_aprobacion</item>
+        <item>@string/estado_aprobado</item>
+        <item>@string/estado_rechazado</item>
+        <item>@string/estado_enviado</item>
+        <item>@string/estado_cancelado</item>
+    </string-array>
+
     <!-- ================= Fichas ================= -->
     <string name="label_client_data">Datos del cliente</string>
     <string name="label_equipment">Equipos instalados</string>
