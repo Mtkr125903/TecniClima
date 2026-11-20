@@ -2,7 +2,7 @@
 
 App Android de gestión para empresas de climatización y HVAC (módulos de Clientes, Equipos,
 Historial de Servicios, Presupuestos, Comprobantes, Seguimiento de Trabajos, Agenda y Turnos,
-**Diagrama de Mollier** y Técnicos).
+**Diagrama de Mollier**, **Datos de la Empresa** y Técnicos).
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-1.9.23-7F52FF.svg) ![Android](https://img.shields.io/badge/Android-24%2B-3DDC84.svg) ![Room](https://img.shields.io/badge/Room-2.6.1-FF6D00.svg)
 [![Android CI](https://github.com/Mtkr125903/TecniClima/actions/workflows/android.yml/badge.svg)](https://github.com/Mtkr125903/TecniClima/actions/workflows/android.yml)
@@ -16,7 +16,7 @@ Historial de Servicios, Presupuestos, Comprobantes, Seguimiento de Trabajos, Age
 | Persistencia | Room 2.6.1 (`airservice.db`, migraciones manuales) |
 | Navegación | Navigation Component 2.7.7 (un subgrafo por pestaña) |
 | Imágenes | Coil 2.7.0 · cámara y galería sin permisos |
-| PDF | Generador propio (`util/PdfGenerator.kt`), sin librerías externas |
+| PDF | Generador propio (`util/PdfGenerator.kt`), sin librerías externas · desglose de renglones y recargos |
 | Mollier (P-h) | WebView local con Plotly.js empaquetado + motor termodinámico JS (tablas congeladas con CoolProp) |
 
 ## Requisitos
@@ -60,6 +60,7 @@ app/src/main/java/com/airservice/pro/
 ├── ui/                     # un paquete por módulo + MainActivity (tabs/nav)
 │   ├── client/  equipment/  history/  budget/
 │   ├── receipt/ track/     agenda/    technician/   mollier/
+│   ├── profile/            # datos de la empresa (perfil, logo)
 │   └── common/UiHelpers.kt # estados vacíos, badges y colores
 └── util/                   # Fecha, Numero, PDF, fotos, compartir, WhatsApp, MollierValidacion
 ```
@@ -73,6 +74,47 @@ app/src/main/java/com/airservice/pro/
 - `especificaciones.md`: especificación funcional y de diseño del proyecto.
 - `AGENTS.md`: guía de trabajo para agentes (comandos, restricciones de red y migraciones).
 
+## Módulos
+
+### Presupuestos
+
+El editor (`ui/budget/BudgetEditFragment.kt`) permite cargar renglones desde el catálogo, aplicar
+plantillas y agregar recargos; el total se calcula solo a partir de los renglones.
+
+- **Renglones y recargos**: se editan y se borran **por índice**, nunca por `equals`. Con
+  `data class` dos renglones idénticos (`items.remove(item)` / `items.indexOf(existente)`)
+  editaban o borraban el equivocado.
+- **Guardado transaccional**: presupuesto, renglones y recargos se escriben dentro de
+  `db.withTransaction { }`, así no queda un presupuesto a medio guardar si falla un renglón.
+- **Rotación**: cliente y equipo elegidos se guardan en `onSaveInstanceState` y se restauran al
+  recrear el formulario.
+- **Recargos fuera del catálogo**: si el recargo no está en `charge_catalog` no se puede deducir
+  si era de temporada, así se respeta el importe ya guardado en lugar de recalcularlo.
+
+### Datos de la empresa
+
+Pantalla `ui/profile/CompanyProfileFragment.kt` (fila única `company_profile`, id = 1) con
+nombre, matrícula, CUIT, teléfono, WhatsApp, alias de pago, dirección, validez por defecto de los
+presupuestos y logo.
+
+- Se accede desde el botón **Empresa** del header de `MainActivity`.
+- El logo se elige de la galería (`PickVisualMedia`, sin permisos) y se copia al almacenamiento
+  propio de la app con `PhotoStorage.copiarDesde`.
+- La primera vez se avisa (una sola vez, con un flag en `SharedPreferences`) que faltan los datos
+  de la empresa para que los documentos salgan con cabecera.
+
+### PDF
+
+`util/PdfGenerator.kt` es un generador PDF 1.4 propio (sin librerías externas).
+
+- `PdfGenerator.Documento` acepta `renglones`, `recargos` y `empresa`; todos son opcionales, así
+  que los comprobantes y los presupuestos antiguos se imprimen igual.
+- Con desglose: tabla de renglones (concepto, cantidad, precio unitario, subtotal), sección de
+  recargos y bloque `Subtotal` / `Recargos` antes de la banda `TOTAL`.
+- Los importes se alinean a la derecha con las métricas reales de Helvetica; los conceptos largos
+  se envuelven en varias líneas y la cabecera de tabla se repite al cortar página.
+- Los datos de la empresa salen en el encabezado (solo los campos con contenido).
+
 ## Notas de implementación
 
 - **Room sin `fallbackToDestructiveMigration`**: todo cambio de esquema exige subir `version` en
@@ -85,6 +127,9 @@ app/src/main/java/com/airservice/pro/
   elegida se copia al almacenamiento propio de la app porque el acceso a la galería es temporal.
 - **Compartir PDFs**: requiere `ClipData.newRawUri` + `FLAG_GRANT_READ_URI_PERMISSION`, o el
   chooser falla con *Permission Denial*.
+- **Estados de presupuesto**: viven en `strings.xml` (`presupuesto_estados` y los `estado_*`).
+  El texto es parte del dato guardado, así que debe coincidir exactamente con lo que espera
+  `UiHelpers.colorEstado()` para pintar el color del estado.
 - **Diagrama de Mollier (P-h)**: los assets `mollier.html`, `mollier.js`, `mollier_data.js` y
   `plotly-basic.min.js` se cargan desde `file:///android_asset/`. `mollier_data.js` es
   **generado** con `tools/mollier/generar_datos.py` (necesita `pip install CoolProp`) y se valida
